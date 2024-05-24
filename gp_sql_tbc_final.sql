@@ -1,12 +1,13 @@
 
-
+--creating tables
 CREATE TABLE customers (
     customer_id SERIAL PRIMARY KEY,
     customer_name VARCHAR(255) NOT NULL,
     email_address VARCHAR(255) UNIQUE NOT NULL,
     country VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-); --DISTRIBUTED BY (customer_id);
+) 
+DISTRIBUTED BY (customer_id);
 --2. Products Table
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
@@ -14,7 +15,8 @@ CREATE TABLE products (
     price NUMERIC(10, 2) NOT NULL,
     category VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ;--DISTRIBUTED BY (product_id);
+)
+DISTRIBUTED BY (product_id);
 --3. Sales Transactions Table
 CREATE TABLE sales_transactions (
     transaction_id SERIAL PRIMARY KEY,
@@ -25,7 +27,8 @@ CREATE TABLE sales_transactions (
     total_amount NUMERIC(10, 2), 
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
-); --DISTRIBUTED BY (transaction_id);
+) 
+DISTRIBUTED BY (transaction_id);
 SELECT * FROM  sales_transactions 
 --4. Shipping Details Table
 CREATE TABLE shipping_details (
@@ -36,7 +39,8 @@ CREATE TABLE shipping_details (
     country VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (transaction_id) REFERENCES sales_transactions(transaction_id)
-);--DISTRIBUTED BY (transaction_id);
+) 
+DISTRIBUTED BY (transaction_id);
 
 --Insert Random ValuesInsert Random Values into Customers Table
 INSERT INTO customers (customer_name, email_address, country)
